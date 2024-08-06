@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "strictPropertyInitialization": false ,
+    "outDir": "./dist",
+  
+  
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+  },
+
+  "include": ["src/**/*", "src/types/**/*.d.ts", "tests/studentController.test.ts"],
+  "exclude": ["node_modules", "dist"]
+}
+
+// {
+//   "compilerOptions": {
+//     "target": "es2016",
+//     "module": "commonjs",
+//     "experimentalDecorators": true,
+//     "emitDecoratorMetadata": true,
+//     "strict": true,
+//     "esModuleInterop": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "skipLibCheck": true,
+//     "resolveJsonModule": true,
+//     "strictPropertyInitialization": false,
+//     "outDir": "./dist",
+//     "allowSyntheticDefaultImports": true, // Add this line
+//     "moduleResolution": "node" // Add this line
+//   },
+//   "include": ["src/**/*", "src/types/**/*.d.ts", "tests/**/*", "test/authMiddleware.test.ts"],
+//   "exclude": ["node_modules", "dist"]
+// }

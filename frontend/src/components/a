@@ -1,0 +1,65 @@
+
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserDetails } from '../store/slices/UserSlice';
+
+const UserListing = () => {
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.user.users);
+
+  const editHandler = (user) => {
+    dispatch(setUserDetails(user));
+  };
+
+  const deleteUser = (userId) => {
+    const row = document.querySelector(`tr[data-id="${userId}"]`);
+    row.remove();
+  };
+
+  return (
+    <div className="container mx-auto mt-20 px-4">
+      <div className="list-container bg-white p-6 shadow-md rounded-lg">
+        <h2 className="text-2xl font-bold mb-4">User Listing</h2>
+        <table className="w-full">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="px-4 py-2">Username</th>
+              <th className="px-4 py-2">Email</th>
+              <th className="px-4 py-2">Mobile</th>
+              <th className="px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="user-list">
+            {users.map((user) => (
+              <tr key={user.id} data-id={user.id} className="border-b border-gray-200">
+                <td className="px-4 py-2">{user.name}</td>
+                <td className="px-4 py-2">{user.email}</td>
+                <td className="px-4 py-2">{user.phone}</td>
+                <td className="px-4 py-2">
+                  <Link to="/edit_profile">
+                    <button
+                      className="edit-button bg-green-500 text-white py-1 px-2 rounded-md hover:bg-green-600 transition duration-300"
+                      onClick={() => editHandler(user)}
+                    >
+                      Edit
+                    </button>
+                  </Link>
+                  <button
+                    className="delete-button bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-600 transition duration-300"
+                    onClick={() => deleteUser(user.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default UserListing;
+

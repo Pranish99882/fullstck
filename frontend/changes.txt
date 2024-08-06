@@ -1,0 +1,50 @@
+// // vitest.config.js
+// import { defineConfig } from 'vitest/config';
+
+// export default defineConfig({
+//   test: {
+//     environment: 'jsdom',
+//     setupFiles: './tests/setup.js',
+//     globals: true,
+
+//   },
+// });
+// vitest.config.js
+
+_: unknown,
+      { search = "", first = 10, after }: { search?: string; first?: number; after?: string }
+    ) => {
+      // Filter users based on search query
+      let filteredUsers = userData.filter((user) =>
+        user.firstName.toLowerCase().includes(search.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(search.toLowerCase()) ||
+        user.email.toLowerCase().includes(search.toLowerCase())
+      );
+
+      // Handle pagination using cursor (after)
+      if (after) {
+        const cursorIndex = filteredUsers.findIndex((user) => user.id.toString() === after);
+        filteredUsers = filteredUsers.slice(cursorIndex + 1);
+      }
+
+      // Select the first 'first' number of users after filtering and pagination
+      const selectedUsers = filteredUsers.slice(0, first);
+
+      // Map users to edges for GraphQL response
+      const edges = selectedUsers.map((user) => ({
+        cursor: user.id.toString(),
+        node: user,
+      }));
+
+      // Determine endCursor and hasNextPage
+      const endCursor = edges.length > 0 ? edges[edges.length - 1].cursor : null;
+      const hasNextPage = filteredUsers.length > first;
+
+      return {
+        edges,
+        pageInfo: {
+          endCursor,
+          hasNextPage,
+        },
+      };
+    },   
